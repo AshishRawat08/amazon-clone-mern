@@ -16,7 +16,7 @@ const Newnav = () => {
                 <p>Amazon Pay</p>
             </div>
             <div className="right_data">
-                <img src="" alt="logo" />
+                <img src="nav.jpg" alt="navdata" />
             </div>
         </div>
     </div>
