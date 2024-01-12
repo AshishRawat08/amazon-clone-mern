@@ -1,20 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./cart.css";
 import { Divider } from "@mui/material";
+import { useParams } from "react-router-dom";
 
 const Cart = () => {
+  const { id } = useParams("");
+  // console.log(id);
+
+  const [individualdata, setIndividualdata] = useState([]);
+  console.log(individualdata);
+
+  const getindividualdata = async () => {
+    const res = await fetch(`/getproductsone/${id}`, {
+      method: "GET",
+      header: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json();
+    // console.log(data);
+
+    if (res.status !== 201) {
+      console.log("No data available");
+    } else {
+      console.log("get data");
+      setIndividualdata(data);
+    }
+  };
+
+  useEffect(() => {
+    getindividualdata();
+  }, [id]);
+
   return (
     <div className="cart_section">
       <div className="cart_container">
         <div className="left_cart">
-          <img src="../earbirds.jpg" alt="cart_img" />
+          <img src={individualdata.detailUrl} alt="cart_img" />
           <div className="cart_btn">
             <button className="cart_btn1">Add to Cart</button>
             <button className="cart_btn2">Buy Now</button>
           </div>
         </div>
         <div className="right_cart">
-          <h3>Fitness Gear</h3>
+          <h3>{individualdata.title.shortTitle}</h3>
           <h4>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, quasi?
           </h4>
@@ -44,8 +74,21 @@ const Cart = () => {
             </p>
           </div>
           <p className="description">
-            About the Item : <span style={{color:"#565959", fontSize:14, fontWeight:500, letterSpacing:"0.4"}}> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus sed assumenda temporibus a alias omnis vel hic aperiam unde dolor cupiditate, aliquam quidem numquam accusantium? Temporibus ipsa quia tenetur provident.</span>
-           
+            About the Item :{" "}
+            <span
+              style={{
+                color: "#565959",
+                fontSize: 14,
+                fontWeight: 500,
+                letterSpacing: "0.4",
+              }}
+            >
+              {" "}
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus
+              sed assumenda temporibus a alias omnis vel hic aperiam unde dolor
+              cupiditate, aliquam quidem numquam accusantium? Temporibus ipsa
+              quia tenetur provident.
+            </span>
           </p>
         </div>
       </div>

@@ -7,7 +7,7 @@ const middleware = [thunk];
 
 const store = legacy_createStore(
   rootreducers,
-  composeWithDevTools(applyMiddleware(...middleware),)
+  composeWithDevTools(applyMiddleware(...middleware))
 );
 
 export default store;

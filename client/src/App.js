@@ -10,6 +10,7 @@ import Sign_up from "./components/signup_sign/Sign_up";
 import { Routes, Route } from "react-router-dom";
 
 
+
 function App() {
   return (
     <>
@@ -19,7 +20,7 @@ function App() {
         <Route path="/" element={<Maincomponent />} />
         <Route path="/login" element={<Sign_in />} />
         <Route path="/register" element={<Sign_up />} />
-        <Route path="/getproductone/:id" element={<Cart />} />
+        <Route path="/getproductsone/:id" element={<Cart />} />
         <Route path="/buynow" element={<Buynow />} />
       </Routes>
       <Footer />

@@ -2,13 +2,14 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Divider } from "@mui/material";
-import { products } from "./productdata";
+// import { products } from "./productdata";
 import "./slide.css";
+import { NavLink } from "react-router-dom";
 
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 3,
+    items: 4,
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
@@ -19,7 +20,7 @@ const responsive = {
     items: 1,
   },
 };
-const Slide = ({ title }) => {
+const Slide = ({ title, products }) => {
   return (
     <div className="products_section">
       <div className="products_deal">
@@ -45,14 +46,18 @@ const Slide = ({ title }) => {
       >
         {products.map((e) => {
           return (
-            <div className="products_items">
-              <div className="product_img">
-                <img src={e.url} alt="productitem" />
-              </div>
-              <p className="products_name">{e.title.shortTitle}</p>
-              <p className="products_offer">{e.discount}</p>
-              <p className="products_explore">{e.tagline}</p>
-            </div>
+            <>
+              <NavLink to={`/getproductsone/${e.id}`}>
+                <div className="products_items">
+                  <div className="product_img">
+                    <img src={e.url} alt="product" />
+                  </div>
+                  <p className="products_name">{e.title.shortTitle}</p>
+                  <p className="products_offer">{e.discount}</p>
+                  <p className="products_explore">{e.tagline}</p>
+                </div>
+              </NavLink>
+            </>
           );
         })}
       </Carousel>
