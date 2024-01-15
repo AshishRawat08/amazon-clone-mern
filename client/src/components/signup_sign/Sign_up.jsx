@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Sign_up = () => {
   const [userdata, setUserdata] = useState({
@@ -9,6 +11,7 @@ const Sign_up = () => {
     password: "",
     cpassword: "",
   });
+
   console.log(userdata);
 
   const adddata = (e) => {
@@ -22,6 +25,48 @@ const Sign_up = () => {
     });
   };
 
+  const senddata = async (e) => {
+    e.preventDefault();
+    const { fname, email, mobile, password, cpassword } = userdata;
+
+    const res = await fetch(`/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fname,
+        email,
+        mobile,
+        password,
+        cpassword,
+      }),
+    });
+
+    const data = await res.json();
+    // console.log(data);
+
+    if (res.status === 422 || !data) {
+      // alert("no data");
+      toast.warn("invalid details", {
+        position: "top-center",
+      });
+    } else {
+      // alert("data added successfully...!!!");
+      toast.success("Data added successfully", {
+        position: "top-center",
+      });
+      setUserdata({
+        ...userdata,
+        fname: "",
+        email: "",
+        mobile: "",
+        password: "",
+        cpassword: "",
+      });
+    }
+  };
+
   return (
     <section>
       <div className="sign_container">
@@ -29,7 +74,7 @@ const Sign_up = () => {
           <img src="./blacklogoamazon.png" alt="amazonlogo" />
         </div>
         <div className="sign_form">
-          <form>
+          <form method="POST">
             <h1>Create Account</h1>
             <div className="form_data">
               <label htmlFor="fname">Your Name</label>
@@ -53,9 +98,9 @@ const Sign_up = () => {
               />
             </div>
             <div className="form_data">
-              <label htmlFor="number">Mobile Number</label>
+              <label htmlFor="mobile">Mobile Number</label>
               <input
-                type="text"
+                type="number"
                 onChange={adddata}
                 value={userdata.mobile}
                 name="mobile"
@@ -83,7 +128,10 @@ const Sign_up = () => {
                 id="cpassword"
               />
             </div>
-            <button className="signin_btn">Continue</button>
+            <button className="signin_btn" onClick={senddata}>
+              {" "}
+              Continue
+            </button>
 
             <div className="signin_info">
               <p>Already have an account?</p>
@@ -91,6 +139,7 @@ const Sign_up = () => {
             </div>
           </form>
         </div>
+        <ToastContainer />
       </div>
     </section>
   );

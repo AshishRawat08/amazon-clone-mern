@@ -20,7 +20,8 @@ const responsive = {
     items: 1,
   },
 };
-const Slide = ({ title, products }) => {
+const Slide = ({ title, products = [] }) => {
+  
   return (
     <div className="products_section">
       <div className="products_deal">
@@ -46,18 +47,16 @@ const Slide = ({ title, products }) => {
       >
         {products.map((e) => {
           return (
-            <>
-              <NavLink to={`/getproductsone/${e.id}`}>
-                <div className="products_items">
-                  <div className="product_img">
-                    <img src={e.url} alt="product" />
-                  </div>
-                  <p className="products_name">{e.title.shortTitle}</p>
-                  <p className="products_offer">{e.discount}</p>
-                  <p className="products_explore">{e.tagline}</p>
+            <NavLink to={`/getproductsone/${e.id}`}>
+              <div className="products_items">
+                <div className="product_img">
+                  <img src={e.url} alt="product" />
                 </div>
-              </NavLink>
-            </>
+                <p className="products_name">{e.title.shortTitle}</p>
+                <p className="products_offer">{e.discount}</p>
+                <p className="products_explore">{e.tagline}</p>
+              </div>
+            </NavLink>
           );
         })}
       </Carousel>

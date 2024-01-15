@@ -13,7 +13,7 @@ const Cart = () => {
   const getindividualdata = async () => {
     const res = await fetch(`/getproductsone/${id}`, {
       method: "GET",
-      header: {
+      headers: {
         "Content-Type": "application/json",
       },
     });
@@ -44,22 +44,36 @@ const Cart = () => {
           </div>
         </div>
         <div className="right_cart">
-          <h3>{individualdata.title.shortTitle}</h3>
+          <h3>{individualdata?.title?.shortTitle}</h3>
+
           <h4>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, quasi?
+          {individualdata?.title?.longTitle}
           </h4>
+
           <Divider />
-          <p className="mrp">M.R.P : ₹1190</p>
+          <p className="mrp">M.R.P : {individualdata?.price?.mrp}</p>
           <p>
-            Deal of the day : <span style={{ color: "#B12704" }}>₹625.00</span>
+            Deal of the day :{" "}
+            <span style={{ color: "#B12704" }}>
+              ₹
+              {individualdata?.price?.cost}
+              .00
+            </span>
           </p>
           <p>
-            You save : <span style={{ color: "#B12704" }}>₹550(47%)</span>
+            You save :{" "}
+            <span style={{ color: "#B12704" }}>
+              ₹
+              {individualdata?.price?.mrp - individualdata?.price?.cost}
+              (
+              {individualdata?.price?.discount}
+              )
+            </span>
           </p>
 
           <div className="discount_box">
             <h5>
-              Discount: <span style={{ color: "#111" }}>Extra 10%</span>
+              Discount: <span style={{ color: "#111" }}> {individualdata?.discount}</span>
             </h5>
             <h4>
               Free Delivery :{" "}
@@ -83,11 +97,7 @@ const Cart = () => {
                 letterSpacing: "0.4",
               }}
             >
-              {" "}
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus
-              sed assumenda temporibus a alias omnis vel hic aperiam unde dolor
-              cupiditate, aliquam quidem numquam accusantium? Temporibus ipsa
-              quia tenetur provident.
+              {individualdata?.description}
             </span>
           </p>
         </div>
