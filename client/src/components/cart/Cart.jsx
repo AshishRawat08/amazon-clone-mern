@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./cart.css";
 import { Divider } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { LoginContext } from "../context/ContextProvider";
 
 const Cart = () => {
   const { id } = useParams("");
   // console.log(id);
+
+  const { account, setAccount } = useContext(LoginContext);
 
   const [individualdata, setIndividualdata] = useState([]);
   console.log(individualdata);
@@ -33,47 +36,73 @@ const Cart = () => {
     getindividualdata();
   }, [id]);
 
+  // add cart function
+  const addtocart = async (id) => {
+    const checkres = await fetch(`/addcart/${id}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        individualdata,
+      }),
+      credentials: "include",
+    });
+
+    const data1 = await checkres.json();
+    console.log(data1);
+
+    if (checkres.status === 401 || !data1) {
+      console.log("user invalid");
+      alert("user invalid");
+    } else {
+      alert("data added in your cart");
+      setAccount(data1);
+    }
+  };
+
   return (
     <div className="cart_section">
       <div className="cart_container">
         <div className="left_cart">
           <img src={individualdata.detailUrl} alt="cart_img" />
           <div className="cart_btn">
-            <button className="cart_btn1">Add to Cart</button>
+            <button
+              className="cart_btn1"
+              onClick={() => addtocart(individualdata.id)}
+            >
+              Add to Cart
+            </button>
             <button className="cart_btn2">Buy Now</button>
           </div>
         </div>
         <div className="right_cart">
           <h3>{individualdata?.title?.shortTitle}</h3>
 
-          <h4>
-          {individualdata?.title?.longTitle}
-          </h4>
+          <h4>{individualdata?.title?.longTitle}</h4>
 
           <Divider />
           <p className="mrp">M.R.P : {individualdata?.price?.mrp}</p>
           <p>
             Deal of the day :{" "}
             <span style={{ color: "#B12704" }}>
-              ₹
-              {individualdata?.price?.cost}
+              ₹{individualdata?.price?.cost}
               .00
             </span>
           </p>
           <p>
             You save :{" "}
             <span style={{ color: "#B12704" }}>
-              ₹
-              {individualdata?.price?.mrp - individualdata?.price?.cost}
-              (
-              {individualdata?.price?.discount}
-              )
+              ₹{individualdata?.price?.mrp - individualdata?.price?.cost}(
+              {individualdata?.price?.discount})
             </span>
           </p>
 
           <div className="discount_box">
             <h5>
-              Discount: <span style={{ color: "#111" }}> {individualdata?.discount}</span>
+              Discount:{" "}
+              <span style={{ color: "#111" }}> {individualdata?.discount}</span>
             </h5>
             <h4>
               Free Delivery :{" "}

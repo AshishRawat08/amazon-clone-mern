@@ -9,8 +9,6 @@ import Sign_in from "./components/signup_sign/Sign_in";
 import Sign_up from "./components/signup_sign/Sign_up";
 import { Routes, Route } from "react-router-dom";
 
-
-
 function App() {
   return (
     <>
