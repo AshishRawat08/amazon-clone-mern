@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./signup.css";
 import { NavLink } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { LoginContext } from "../context/ContextProvider";
 
 const Sign_in = () => {
   const [logdata, setData] = useState({
@@ -10,6 +11,8 @@ const Sign_in = () => {
     password: "",
   });
   console.log(logdata);
+
+  const { account, setAccount } = useContext(LoginContext);
 
   const adddata = (e) => {
     const { name, value } = e.target;
@@ -42,12 +45,13 @@ const Sign_in = () => {
     console.log(data);
 
     if (res.status === 400 || !data) {
-      console.log("invalid details....");
+      console.log("invalid details");
       toast.warn("invalid details", {
         position: "top-center",
       });
     } else {
       console.log("data valid");
+      setAccount(data)
       toast.success("user valid", {
         position: "top-center",
       });

@@ -16,7 +16,7 @@ router.get("/getproducts", async (req, res) => {
   }
 });
 
-// get individual product data
+// get individual product data api
 router.get("/getproductsone/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -31,7 +31,7 @@ router.get("/getproductsone/:id", async (req, res) => {
   }
 });
 
-// register user data
+// register user data api
 router.post("/register", async (req, res) => {
   // console.log(req.body);
   const { fname, email, mobile, password, cpassword } = req.body;
@@ -61,7 +61,6 @@ router.post("/register", async (req, res) => {
 });
 
 // Login user api
-
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -99,7 +98,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// adding data into cart
+// adding data into cart api
 router.post("/addcart/:id", authenticate, async (req, res) => {
   try {
     const { id } = req.params;
@@ -119,6 +118,43 @@ router.post("/addcart/:id", authenticate, async (req, res) => {
     }
   } catch (error) {
     res.status(401).json({ error: "invalid user" });
+  }
+});
+
+// get cart details api
+router.get("/cartdetails", authenticate, async (req, res) => {
+  try {
+    const buyuser = await USER.findOne({ _id: req.userID });
+    res.status(201).json(buyuser);
+  } catch (error) {
+    console.log("error" + error);
+  }
+});
+
+// get valid user api
+router.get("/validuser", authenticate, async (req, res) => {
+  try {
+    const validuserone = await USER.findOne({ _id: req.userID });
+    res.status(201).json(validuserone);
+  } catch (error) {
+    console.log("error" + error);
+  }
+});
+
+// remove item from cart
+router.delete("/remove/:id", authenticate, async (req, res) => {
+  try {
+    const { id } = req.params;
+    req.rootUser.carts = req.rootUser.carts.filter((cruval) => {
+      return cruval.id != id;
+    });
+
+    req.rootUser.save();
+    res.status(201).json(req.rootUser);
+    console.log("item removed");
+  } catch (error) {
+    console.log("error" + error);
+    res.status(400).json(req.rootUser);
   }
 });
 

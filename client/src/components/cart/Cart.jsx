@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./cart.css";
 import { Divider } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { LoginContext } from "../context/ContextProvider";
 
 const Cart = () => {
   const { id } = useParams("");
   // console.log(id);
+
+  const history = useNavigate();
 
   const { account, setAccount } = useContext(LoginContext);
 
@@ -57,7 +59,8 @@ const Cart = () => {
       console.log("user invalid");
       alert("user invalid");
     } else {
-      alert("data added in your cart");
+      // alert("data added in your cart");
+      history("/buynow");
       setAccount(data1);
     }
   };

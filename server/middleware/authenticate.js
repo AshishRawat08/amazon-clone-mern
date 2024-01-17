@@ -9,19 +9,19 @@ const authenticate = async (req, res, next) => {
     const verifyToken = jwt.verify(token, secretKey);
     console.log(verifyToken);
 
-    const routeUser = await USER.findOne({
+    const rootUser = await USER.findOne({
       _id: verifyToken._id,
       "tokens.token": token,
     });
-    console.log(routeUser);
+    console.log(rootUser);
 
-    if (!routeUser) {
+    if (!rootUser) {
       throw new Error("user not found");
     }
 
     req.token = token;
-    req.routeUser = routeUser;
-    req.userID = routeUser._id;
+    req.rootUser = rootUser;
+    req.userID = rootUser._id;
 
     next();
   } catch (error) {
