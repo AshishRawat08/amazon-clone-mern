@@ -55,6 +55,7 @@ const Sign_in = () => {
       toast.success("user valid", {
         position: "top-center",
       });
+      
       setData({ ...logdata, email: "", password: "" });
     }
   };
