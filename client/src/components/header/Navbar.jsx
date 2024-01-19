@@ -12,9 +12,12 @@ import Drawer from "@mui/material/Drawer";
 import Rightheader from "./Rightheader";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const { account, setAccount } = useContext(LoginContext);
@@ -31,14 +34,21 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
+  const [text, setText] = useState("");
+  console.log(text);
+
+  const [liopen, setLiopen] = useState(true);
+
+  const { products } = useSelector((state) => state.getproductsdata);
+
   const [dropen, setDropen] = useState(false);
 
   const getdetailvaliduser = async () => {
     const res = await fetch("/validuser", {
       method: "GET",
       headers: {
-        Accept: "appication/json",
-        "Content-Type": "appication/json",
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       credentials: "include",
     });
@@ -79,12 +89,17 @@ const Navbar = () => {
     } else {
       console.log("valid data");
       // alert("user log out");
-      toast.success("user Logout 😃!", {
+      toast.success("user logout", {
         position: "top-center",
       });
       history("/");
       setAccount(false);
     }
+  };
+
+  const getText = (items) => {
+    setText(items);
+    setLiopen(false)
   };
 
   useEffect(() => {
@@ -100,7 +115,7 @@ const Navbar = () => {
           </IconButton>
 
           <Drawer open={dropen} onClose={handledrclose}>
-            <Rightheader logclose={handledrclose} />
+            <Rightheader logclose={handledrclose} logoutuser ={logoutuser} />
           </Drawer>
           <div className="navlogo">
             <NavLink to="/">
@@ -108,10 +123,33 @@ const Navbar = () => {
             </NavLink>
           </div>
           <div className="nav_searchbaar">
-            <input type="text" name="" id="" />
+            <input
+              type="text"
+              name=""
+              onChange={(e) => getText(e.target.value)}
+              placeholder="Search your product"
+              id=""
+            />
             <div className="search_icon">
               <SearchIcon id="search" />
             </div>
+
+            {/* search filter  */}
+            {
+              text &&
+              <List className="extrasearch" hidden={liopen}>
+                    {
+                      products.filter(product =>product.title.longTitle.toLowerCase().includes(text.toLowerCase())).map(product =>(
+                        <ListItem>
+                          <NavLink to={`/getproductsone/${product.id}`} onClick={() =>setLiopen(true)}>
+                          {product.title.longTitle}
+                          </NavLink>
+                          
+                        </ListItem>
+                      ))
+                    }
+              </List>
+            }
           </div>
         </div>
         <div className="right">

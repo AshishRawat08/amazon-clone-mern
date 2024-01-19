@@ -51,11 +51,11 @@ const Sign_in = () => {
       });
     } else {
       console.log("data valid");
-      setAccount(data)
+      setAccount(data);
       toast.success("user valid", {
         position: "top-center",
       });
-      
+
       setData({ ...logdata, email: "", password: "" });
     }
   };
