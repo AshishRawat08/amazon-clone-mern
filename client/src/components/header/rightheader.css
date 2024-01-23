@@ -38,9 +38,10 @@
 }
 
 .nav_btn a{
+    padding-top: 7px;
     text-decoration: none;
     font-size: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-weight: 600;
     color: #131921;
 }

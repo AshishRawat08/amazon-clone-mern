@@ -75,8 +75,8 @@ const Navbar = () => {
     const res2 = await fetch("/logout", {
       method: "GET",
       headers: {
-        Accept: "appication/json",
-        "Content-Type": "appication/json",
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       credentials: "include",
     });
@@ -87,19 +87,20 @@ const Navbar = () => {
     if (res2.status !== 201) {
       console.log("error");
     } else {
+      setAccount(false);
       console.log("valid data");
       // alert("user log out");
       toast.success("user logout", {
         position: "top-center",
       });
-      history("/");
-      setAccount(false);
+      history("/login");
+      
     }
   };
 
   const getText = (items) => {
     setText(items);
-    setLiopen(false)
+    setLiopen(false);
   };
 
   useEffect(() => {
@@ -115,7 +116,7 @@ const Navbar = () => {
           </IconButton>
 
           <Drawer open={dropen} onClose={handledrclose}>
-            <Rightheader logclose={handledrclose} logoutuser ={logoutuser} />
+            <Rightheader logclose={handledrclose} logoutuser={logoutuser} />
           </Drawer>
           <div className="navlogo">
             <NavLink to="/">
@@ -135,21 +136,26 @@ const Navbar = () => {
             </div>
 
             {/* search filter  */}
-            {
-              text &&
+            {text && (
               <List className="extrasearch" hidden={liopen}>
-                    {
-                      products.filter(product =>product.title.longTitle.toLowerCase().includes(text.toLowerCase())).map(product =>(
-                        <ListItem>
-                          <NavLink to={`/getproductsone/${product.id}`} onClick={() =>setLiopen(true)}>
-                          {product.title.longTitle}
-                          </NavLink>
-                          
-                        </ListItem>
-                      ))
-                    }
+                {products
+                  .filter((product) =>
+                    product.title.longTitle
+                      .toLowerCase()
+                      .includes(text.toLowerCase())
+                  )
+                  .map((product) => (
+                    <ListItem>
+                      <NavLink
+                        to={`/getproductsone/${product.id}`}
+                        onClick={() => setLiopen(true)}
+                      >
+                        {product.title.longTitle}
+                      </NavLink>
+                    </ListItem>
+                  ))}
               </List>
-            }
+            )}
           </div>
         </div>
         <div className="right">

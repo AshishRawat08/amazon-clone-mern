@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
 import "./signup.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 import { LoginContext } from "../context/ContextProvider";
 
 const Sign_in = () => {
+  const navigate = useNavigate();
   const [logdata, setData] = useState({
     email: "",
     password: "",
@@ -52,10 +54,11 @@ const Sign_in = () => {
     } else {
       console.log("data valid");
       setAccount(data);
+      // alert("user login");
       toast.success("user valid", {
-        position: "top-center",
+        position: "top-right",
       });
-
+      navigate("/");
       setData({ ...logdata, email: "", password: "" });
     }
   };

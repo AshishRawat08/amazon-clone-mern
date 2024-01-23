@@ -25,7 +25,7 @@ const Option = ({ deletedata, get }) => {
         console.log("user deleted item");
         setAccount(data);
         toast.success("item removed from cart", {
-          position: "top-center",
+          position:"bottom-right",
         });
         get();
       }

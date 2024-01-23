@@ -42,7 +42,7 @@ const Rightheader = ({ logclose, logoutuser }) => {
             <img
               src="./india.png"
               alt=""
-              style={{ width: 30, marginLeft: 10, height:30 }}
+              style={{ width: 30, marginLeft: 10, height: 30 }}
             />
           </div>
 

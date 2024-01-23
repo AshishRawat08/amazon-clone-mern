@@ -76,18 +76,18 @@ router.post("/login", async (req, res) => {
       const isMatch = await bcryptjs.compare(password, userlogin.password);
       console.log(isMatch + " password match");
 
-      // token generate
-      const token = await userlogin.generateAuthToken();
-      // console.log(token);
-
-      res.cookie("Amazonweb", token, {
-        expires: new Date(Date.now() + 900000),
-        httpOnly: true,
-      });
-
       if (!isMatch) {
         res.status(400).json({ error: "invalid details" });
       } else {
+        // token generate
+        const token = await userlogin.generateAuthToken();
+        // console.log(token);
+
+        res.cookie("Amazonweb", token, {
+          expires: new Date(Date.now() + 900000),
+          httpOnly: true,
+        });
+
         res.status(201).json(userlogin);
       }
     } else {
