@@ -18,6 +18,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
+import { BASE_URL } from "../URL/Baseurl";
+
 
 const Navbar = () => {
   const { account, setAccount } = useContext(LoginContext);
@@ -44,14 +46,17 @@ const Navbar = () => {
   const [dropen, setDropen] = useState(false);
 
   const getdetailvaliduser = async () => {
-    const res = await fetch("/validuser", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    });
+    const res = await fetch(
+      `${BASE_URL}/validuser`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
 
     const data = await res.json();
     console.log(data);
@@ -72,7 +77,7 @@ const Navbar = () => {
   };
 
   const logoutuser = async () => {
-    const res2 = await fetch("/logout", {
+    const res2 = await fetch(`${BASE_URL}/logout`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -94,7 +99,6 @@ const Navbar = () => {
         position: "top-center",
       });
       history("/login");
-      
     }
   };
 
