@@ -4,13 +4,13 @@ import { Divider } from "@mui/material";
 import Option from "./Option";
 import Subtotal from "./Subtotal";
 import Right from "./Right";
-
+import { BASE_URL } from "../URL/Baseurl";
 const Buynow = () => {
   const [cartdata, setCartdata] = useState("");
   // console.log(cartdata.carts);
 
   const getdatabuy = async () => {
-    const res = await fetch("/cartdetails", {
+    const res = await fetch(`${BASE_URL}/cartdetails`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -60,7 +60,7 @@ const Buynow = () => {
                           src="https://m.media-amazon.com/images/G/31/marketing/fba/fba-badge_18px-2x._CB485942108_.png"
                           alt="logo"
                         />
-                        <Option deletedata ={e.id} get={getdatabuy} />
+                        <Option deletedata={e.id} get={getdatabuy} />
                       </div>
                       <h3 className="item_price">₹{e.price.cost}</h3>
                     </div>
@@ -69,9 +69,9 @@ const Buynow = () => {
                 );
               })}
 
-              <Subtotal item = {cartdata}/>
+              <Subtotal item={cartdata} />
             </div>
-            <Right item = {cartdata}/>
+            <Right item={cartdata} />
           </div>
         </div>
       ) : (

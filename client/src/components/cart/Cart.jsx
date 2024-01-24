@@ -4,6 +4,7 @@ import { Divider } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { LoginContext } from "../context/ContextProvider";
 import CircularProgress from "@mui/material/CircularProgress";
+import { BASE_URL } from "../URL/Baseurl";
 
 const Cart = () => {
   const { id } = useParams("");
@@ -17,12 +18,15 @@ const Cart = () => {
   console.log(individualdata);
 
   const getindividualdata = async () => {
-    const res = await fetch(`/getproductsone/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await fetch(
+      `${BASE_URL}/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await res.json();
     // console.log(data);
@@ -41,17 +45,20 @@ const Cart = () => {
 
   // add cart function
   const addtocart = async (id) => {
-    const checkres = await fetch(`/addcart/${id}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        individualdata,
-      }),
-      credentials: "include",
-    });
+    const checkres = await fetch(
+      `${BASE_URL}/addcart/${id}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          individualdata,
+        }),
+        credentials: "include",
+      }
+    );
 
     const data1 = await checkres.json();
     console.log(data1);
