@@ -25,8 +25,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "build": "npm i --force",
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -52,3 +52,5 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
+
+
