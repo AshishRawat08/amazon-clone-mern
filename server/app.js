@@ -15,7 +15,7 @@ app.use(cookieParser(""));
 app.use(cors());
 app.use(router);
 
-const port = process.env.PORT || 8005;
+const port =  8005;
 
 // for deployment
 if (process.env.NODE_ENV === "production") {

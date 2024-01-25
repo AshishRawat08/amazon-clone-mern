@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LoginContext } from "../context/ContextProvider";
 
+
 const Sign_in = () => {
   const navigate = useNavigate();
   const [logdata, setData] = useState({
@@ -32,7 +33,7 @@ const Sign_in = () => {
 
     const { email, password } = logdata;
 
-    const res = await fetch(`/login`, {
+    const res = await fetch("/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
