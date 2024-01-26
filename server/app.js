@@ -17,6 +17,8 @@ app.use(router);
 
 const port = 8005;
 
+app.use(express.static("../client/build"));
+
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
 });
